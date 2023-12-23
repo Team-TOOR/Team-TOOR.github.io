@@ -1,5 +1,126 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team TOOR Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8fafc; /* Light theme background */
+  }
+  .menu-button {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+  }
+  .menu-list {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s;
+    padding: 1rem;
+    list-style: none;
+  }
+  .menu-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  .menu-list li:hover {
+    background-color: #e2e8f0; /* Slightly darker color on hover */
+  }
+  .menu-list li:last-child {
+    border-bottom: none;
+  }
+  .menu-list.open {
+    right: 0;
+  }
+  .circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .circle {
+    border-radius: 50%;
+    width: 50vmin;
+    height: 50vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vmin;
+    border: 2px solid black;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
 <body>
-Hello! We are Team TOOR!
+
+<div class="menu-button">
+  <button id="menuToggle" class="p-2 border-2 border-black">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="32" height="32">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+    </svg>
+  </button>
+</div>
+
+<ul id="menuList" class="menu-list">
+  <li>About</li>
+  <li>Member</li>
+  <li>News</li>
+  <li>Blog</li>
+  <li>Project</li>
+</ul>
+
+<div class="circle-container">
+  <div class="circle" id="circleText">TEAM TOOR</div>
+</div>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const menuList = document.getElementById('menuList');
+  const circleText = document.getElementById('circleText');
+  const originalText = circleText.textContent;
+  let textIndex = 0;
+
+  menuToggle.addEventListener('click', function() {
+    menuList.classList.toggle('open');
+    // Hide the menu button when the menu is open
+    menuToggle.style.visibility = menuList.classList.contains('open') ? 'hidden' : 'visible';
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!menuToggle.contains(event.target) && !menuList.contains(event.target)) {
+      menuList.classList.remove('open');
+      // Show the menu button when the menu is closed
+      menuToggle.style.visibility = 'visible';
+    }
+  });
+
+  function animateText() {
+    if (textIndex < originalText.length) {
+      circleText.textContent = originalText.substring(0, textIndex + 1);
+      textIndex++;
+      setTimeout(animateText, 150);
+    }
+  }
+
+  animateText();
+
+  // Placeholder for the background visualization algorithm
+  // This would be implemented with a canvas or similar element
+  // and would react to mouse movements to create an interactive experience
+</script>
+
 </body>
 </html>
